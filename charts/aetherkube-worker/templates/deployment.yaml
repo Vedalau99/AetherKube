@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include \"aetherkube-worker.fullname\" . }}
+  labels:
+    app: {{ include \"aetherkube-worker.name\" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: {{ include "aetherkube-worker.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "aetherkube-worker.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ include "aetherkube-worker.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # No ports by default for worker
+          {{- if and .Values.readinessProbe.exec (not (empty .Values.readinessProbe.execCommand)) }}
+          readinessProbe:
+            exec:
+              command: {{ toJson .Values.readinessProbe.execCommand }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          {{- end }}
+          {{- if and .Values.livenessProbe.exec (not (empty .Values.livenessProbe.execCommand)) }}
+          livenessProbe:
+            exec:
+              command: {{ toJson .Values.livenessProbe.execCommand }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          {{- end }}
+          resources:
+            requests:
+              cpu: "{{ .Values.resources.requests.cpu }}"
+              memory: "{{ .Values.resources.requests.memory }}"
+            limits:
+              cpu: "{{ .Values.resources.limits.cpu }}"
+              memory: "{{ .Values.resources.limits.memory }}"

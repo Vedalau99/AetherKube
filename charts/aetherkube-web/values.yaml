@@ -1,0 +1,30 @@
+replicaCount: 2
+
+image:
+  repository: REPLACE_WITH_ACR_LOGIN/myorg/aetherkube-web
+  tag: "dev"
+  pullPolicy: IfNotPresent
+
+service:
+  enabled: true
+  type: ClusterIP
+  port: 3000
+  targetPort: 3000
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 30
+  periodSeconds: 30

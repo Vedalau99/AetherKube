@@ -1,0 +1,71 @@
+# -------------------------
+# TERRAFORM
+# -------------------------
+**/.terraform/
+**/.terraform.lock.hcl
+terraform.tfvars
+*.tfvars
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# local-only vars
+secret.tfvars
+staging.tfvars
+prod.tfvars
+
+# terraform logs
+.terraform.tfstate.lock.info
+
+# -------------------------
+# PYTHON / FLASK
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+.venv/
+
+# Flask instance config
+instance/
+*.db
+*.sqlite
+
+# -------------------------
+# DOCKER
+# -------------------------
+*.pid
+*.log
+
+# -------------------------
+# AZURE CLI / AUTH FILES
+# -------------------------
+.azure/
+*.pem
+*.key
+*.cer
+
+# -------------------------
+# OS / EDITOR FILES
+# -------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# -------------------------
+# PROJECT SPECIFIC
+# -------------------------
+# local build outputs
+dist/
+build/
+logs/
