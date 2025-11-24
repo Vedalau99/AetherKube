@@ -1,6 +1,6 @@
-########################################################
+
 # Staging environment - assembles modules for AetherKube
-########################################################
+
 
 # backend module
 module "tf_backend" {
@@ -40,15 +40,20 @@ module "acr" {
 
 # AKS cluster
 module "aks" {
-  source   = "../../modules/aks"
-  name     = var.aks_name
-  location = var.location
-  rg_name  = module.resource_group.name
+  source = "../../modules/aks"
 
-  node_count = var.aks_node_count
-  vm_size    = var.aks_vm_size
-  subnet_id  = module.network.aks_subnet_id
+  name          = var.aks_name
+  location      = var.location
+  rg_name       = var.rg_name
+  subnet_id     = module.network.aks_subnet_id
+
+  node_count    = var.aks_node_count
+  vm_size       = var.aks_vm_size
+
+  service_cidr   = var.service_cidr
+  dns_service_ip = var.dns_service_ip
 }
+
 
 # Grant AKS identity pull access to ACR (IAM)
 module "iam" {

@@ -9,7 +9,18 @@ variable "node_count" {
 
 variable "vm_size" {
   type    = string
-  default = "Standard_B2s"
+  default = "standard_dc16s_v3"
 }
 
 variable "subnet_id" {}
+
+variable "service_cidr" {
+  type = string
+  default = "10.3.0.0/16"
+}
+
+variable "dns_service_ip" {
+  type = string
+  default = "10.3.0.10"
+}
+
