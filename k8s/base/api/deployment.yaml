@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetherkube-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aetherkube-api
+  template:
+    metadata:
+      labels:
+        app: aetherkube-api
+    spec:
+      containers:
+        - name: aetherkube-api
+          image: aetherkubestagingacr.azurecr.io/aetherkube-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aetherkube-secrets
+                  key: API_KEY
+          envFrom:
+            - configMapRef:
+                name: aetherkube-app-config

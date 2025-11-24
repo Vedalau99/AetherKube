@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetherkube-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aetherkube-web
+  template:
+    metadata:
+      labels:
+        app: aetherkube-web
+    spec:
+      containers:
+        - name: aetherkube-web
+          image: aetherkubestagingacr.azurecr.io/aetherkube-web:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: aetherkube-app-config

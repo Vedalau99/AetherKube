@@ -1,9 +1,8 @@
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: aetherkube-config
-  namespace: staging
+  name: aetherkube-app-config
 data:
-  APP_ENV: "staging"
-  LOG_LEVEL: "INFO"
-  ACR_LOGIN_SERVER: "aetherkubestagingacr.azurecr.io"
+  ENVIRONMENT: "staging"  
+  LOG_LEVEL: "info"

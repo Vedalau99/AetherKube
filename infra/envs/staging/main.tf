@@ -63,11 +63,11 @@ module "iam" {
 }
 
 # Monitoring (Log Analytics + diagnostic settings)
-module "monitoring" {
-  source   = "../../modules/monitoring"
-  name     = var.monitoring_name
-  location = var.location
-  rg_name  = module.resource_group.name
-  aks_id   = module.aks.kube_admin_config != null ? module.aks.kube_admin_config : ""
-}
 
+module "monitoring" {
+  source      = "../../modules/monitoring"
+  name        = var.monitoring_name
+  location    = var.location
+  rg_name     = var.rg_name
+  aks_id      = module.aks.aks_id
+}

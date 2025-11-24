@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aetherkube-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aetherkube-worker
+  template:
+    metadata:
+      labels:
+        app: aetherkube-worker
+    spec:
+      containers:
+        - name: aetherkube-worker
+          image: aetherkubestagingacr.azurecr.io/aetherkube-worker:latest
+          imagePullPolicy: Always
+          env:
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aetherkube-secrets
+                  key: API_KEY
+          envFrom:
+            - configMapRef:
+                name: aetherkube-app-config

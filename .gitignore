@@ -69,3 +69,42 @@ Thumbs.db
 dist/
 build/
 logs/
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Virtual envs
+venv/
+env/
+
+# Node modules (if any)
+node_modules/
+
+# Docker
+*.tar
+
+# VSCode
+.vscode/
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+.terraform.lock.hcl
+
+# Kube
+.kube/
+
+# OS crap
+.DS_Store
+Thumbs.db
+
+# Env files
+*.env
+.env.*
