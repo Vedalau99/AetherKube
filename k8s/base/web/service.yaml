@@ -2,10 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: aetherkube-web
+  namespace: staging
 spec:
   selector:
     app: aetherkube-web
   ports:
-    - port: 80
-      targetPort: 8000
+    - name: http
+      port: 8080
+      targetPort: 8080
   type: ClusterIP
