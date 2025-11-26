@@ -111,7 +111,7 @@ Both services respond successfully, confirming staging is operational.
 ![alt text](image-5.png)
 ![alt text](image-6.png)
 ![alt text](image-7.png)
-
+![alt text](image.png)
 ## Current Status
 
 * Staging infrastructure is fully deployed using Terraform.

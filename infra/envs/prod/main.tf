@@ -1,45 +1,40 @@
 
-# Staging environment - assembles modules for AetherKube
+# Production environment - assembles modules for AetherKube
 
 
-# backend module
-module "tf_backend" {
-  source = "../../modules/tf-backend"
+# Resource Group
+module "rg" {
+  source = "../../modules/resource-group"
 
-  resource_group_name  = var.tfstate_resource_group_name
-  location             = var.location
-  storage_account_name = var.tfstate_storage_account_name
-  container_name       = var.tfstate_container_name
-}
-
-# resource group for the actual staging infra
-module "resource_group" {
-  source   = "../../modules/resource-group"
   name     = var.rg_name
   location = var.location
 }
 
-# network: VNet + subnets
+
+# Network (VNet, subnets)
 module "network" {
-  source       = "../../modules/network"
-  
-  vnet_name    = var.vnet_name
-  location     = var.location
-  rg_name      = module.resource_group.name
+  source   = "../../modules/network"
+
+  vnet_name     = var.vnet_name
+  rg_name       = module.rg.name
+  location      = var.location
   address_space = var.address_space
-  aks_subnet   = var.aks_subnet
-  app_subnet   = var.app_subnet
+
+  aks_subnet = var.aks_subnet
+  app_subnet = var.app_subnet
 }
 
-# Azure Container Registry (ACR)
+
+# ACR
 module "acr" {
-  source       = "../../modules/acr"
-  name         = var.acr_name
-  location     = var.location
-  rg_name      = module.resource_group.name
+  source   = "../../modules/acr"
+  
+  name     = var.acr_name
+  rg_name  = module.rg.name
+  location = var.location
 }
 
-# AKS cluster
+# AKS
 module "aks" {
   source = "../../modules/aks"
 
@@ -54,7 +49,6 @@ module "aks" {
   service_cidr   = var.service_cidr
   dns_service_ip = var.dns_service_ip
 }
-
 
 # Grant AKS identity pull access to ACR (IAM)
 module "iam" {
@@ -72,3 +66,4 @@ module "monitoring" {
   rg_name     = var.rg_name
   aks_id      = module.aks.aks_id
 }
+

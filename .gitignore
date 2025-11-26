@@ -108,3 +108,27 @@ Thumbs.db
 # Env files
 *.env
 .env.*
+# Helm chart build artifacts
+charts/
+helm-docs/
+Chart.lock
+*.tgz
+
+# Helm dependencies
+**/charts/*
+!**/charts/*.yaml
+!**/charts/*.tpl
+!**/charts/*.yml
+
+# Ignore local test output
+tmp/
+test-output/
+
+# IDE / Editors
+.idea/
+.vscode/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db

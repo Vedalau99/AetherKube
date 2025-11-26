@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aetherkube-prod-ingress
+  namespace: prod
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /api(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: aetherkube-api-api-prod
+            port:
+              number: 80
+
+      - path: /web(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: aetherkube-web-web-prod
+            port:
+              number: 80
+

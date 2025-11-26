@@ -1,30 +1,29 @@
-replicaCount: 2
+replicaCount: 1
 
 image:
-  repository: REPLACE_WITH_ACR_LOGIN/myorg/aetherkube-api
-  tag: "dev"
+  repository: aetherkubeprodacr.azurecr.io/service-api
+  tag: "prod"
   pullPolicy: IfNotPresent
 
 service:
-  enabled: true
   type: ClusterIP
-  port: 8080
-  targetPort: 8080
+  port: 80
+  targetPort: 5000
 
 resources:
   requests:
-    cpu: 100m
-    memory: 128Mi
+    cpu: "100m"
+    memory: "128Mi"
   limits:
-    cpu: 500m
-    memory: 512Mi
-
-readinessProbe:
-  path: /health
-  initialDelaySeconds: 10
-  periodSeconds: 10
+    cpu: "250m"
+    memory: "256Mi"
 
 livenessProbe:
   path: /health
-  initialDelaySeconds: 30
-  periodSeconds: 30
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
