@@ -124,9 +124,7 @@ Both services respond successfully, confirming staging is operational.
 * Implement CI/CD using GitHub Actions (build, push, deploy workflow).
 * Optionally register a domain and configure HTTPS with cert-manager.
 
----
 
-If you'd like, I can generate a shorter README, a more detailed one, or split this into sections for documentation.
 
 
 
